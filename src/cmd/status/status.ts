@@ -5,8 +5,9 @@ import isRootOfRepository from "../_utils/project/isRootOfRepository/isRootOfRep
 import getConfig from "../_utils/project/_actions/getConfig/getConfig.js";
 import logWarning from "../_utils/display/logs/caller/logWarning.js";
 import moduleStatus from "../_utils/moduleStatus/moduleStatus.js";
-import formatStatusRow from "../_utils/display/format/formatStatusRow/formatStatusRow.js";
+import formatStatus from "../_utils/display/format/formatStatus/formatStatus.js";
 import definition from "../../config/definition.js";
+import log from "../_utils/display/logs/caller/log.js";
 
 const status = (program: Command) => {
   program
@@ -15,8 +16,8 @@ const status = (program: Command) => {
     .option("--module <name>", "Check a single module")
     .action(async (opts) => {
       const root = isRootOfRepository();
-      const cfg = getConfig(root);
-      const names = opts.module ? [opts.module] : Object.keys(cfg.modules);
+      const config = getConfig(root);
+      const names = opts.module ? [opts.module] : Object.keys(config.modules);
 
       if (!names.length) {
         logWarning(warning.NO_MODULES_FOUND);
@@ -28,9 +29,9 @@ const status = (program: Command) => {
         logWarning(warning.DIRTY_WORKTREE);
       }
 
-      for (const n of names) {
-        const s = await moduleStatus(root, n, cfg);
-        console.log(formatStatusRow(s));
+      for (const name of names) {
+        const status = await moduleStatus(root, name, config);
+        log(formatStatus(status));
       }
     });
 };

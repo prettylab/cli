@@ -1,10 +1,6 @@
 import { execa } from "execa";
 import { IsAheadOrBehind } from "./types.js";
 
-/* --------------------------------------------------------- */
-/* Returns how many commits local is ahead and behind remote */
-/* --------------------------------------------------------- */
-
 const isAheadOrBehind = async (
   root: string,
   localSha: string,

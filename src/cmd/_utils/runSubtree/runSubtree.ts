@@ -1,4 +1,4 @@
-import * as kleur from "kleur";
+import kleur from "kleur";
 import { execa } from "execa";
 import { Config } from "../project/_actions/getConfig/types.js";
 import isRemoteExists from "../git/isRemoteExists/isRemoteExists.js";
@@ -6,17 +6,15 @@ import isRemoteExists from "../git/isRemoteExists/isRemoteExists.js";
 const runSubtree = async (
   root: string,
   action: "add" | "pull" | "push",
-  mname: string,
+  name: string,
   cfg: Config,
 ) => {
-  const mod = cfg.modules[mname];
+  const mod = cfg.modules[name];
   if (!mod) {
-    console.error(
-      kleur.red(`Unknown module '${mname}'. Use 'pretty-subtree list'.`),
-    );
+    console.error(kleur.red(`Unknown module '${name}'. Use 'pretty list'.`));
     process.exit(1);
   }
-  const remoteAlias = `pretty-${mname}`;
+  const remoteAlias = `pretty-${name}`;
   await isRemoteExists(root, remoteAlias, mod.remote);
 
   const branch = mod.branch || cfg.defaultBranch || "main";

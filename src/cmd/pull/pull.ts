@@ -8,11 +8,11 @@ const pull = (program: Command) => {
   program
     .command(definition.pull.command)
     .description(definition.pull.description)
-    .action(async (m) => {
+    .action(async (module) => {
       const root = isRootOfRepository();
-      const cfg = getConfig(root);
+      const config = getConfig(root);
 
-      await runSubtree(root, "pull", m, cfg);
+      await runSubtree(root, "pull", module, config);
     });
 };
 

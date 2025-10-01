@@ -1,13 +1,7 @@
-import * as kleur from "kleur";
+import kleur from "kleur";
 import moduleStatus from "../../../moduleStatus/moduleStatus.js";
 
-/* ---------------------------------------------- */
-/* Format a status row for a module status object */
-/* ---------------------------------------------- */
-
-const formatStatusRow = (
-  s: Awaited<ReturnType<typeof moduleStatus>>,
-): string => {
+const formatStatus = (s: Awaited<ReturnType<typeof moduleStatus>>): string => {
   const name = kleur.bold(s.name);
   const pathTxt = kleur.gray(s.prefix);
   const remoteTxt = kleur.gray(`${s.remote}#${s.branch}`);
@@ -20,4 +14,4 @@ const formatStatusRow = (
   return `${name}  ${pathTxt}  ${remoteTxt}  ${flags.join("  ")}`;
 };
 
-export default formatStatusRow;
+export default formatStatus;

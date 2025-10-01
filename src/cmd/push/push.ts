@@ -8,11 +8,11 @@ const push = (program: Command) => {
   program
     .command(definition.push.command)
     .description(definition.push.description)
-    .action(async (m) => {
+    .action(async (module) => {
       const root = isRootOfRepository();
-      const cfg = getConfig(root);
+      const config = getConfig(root);
 
-      await runSubtree(root, "push", m, cfg);
+      await runSubtree(root, "push", module, config);
     });
 };
 

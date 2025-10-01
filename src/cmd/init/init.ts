@@ -1,14 +1,14 @@
-import path from "path";
-import fs from "fs";
-import os from "os";
 import { Command } from "commander";
-import prompts from "prompts";
-import { defaultConfigFile } from "../../config/configFiles.js";
 import success from "../_utils/display/logs/messages/success.js";
 import isRootOfRepository from "../_utils/project/isRootOfRepository/isRootOfRepository.js";
 import { Config } from "../_utils/project/_actions/getConfig/types.js";
 import logSuccess from "../_utils/display/logs/caller/logSuccess.js";
 import definition from "../../config/definition.js";
+import fetchModules from "../_utils/modules/fetchModules/fetchModules.js";
+import selectModules from "../_utils/prompts/selectModules/selectModules.js";
+import selectDefaultBranch from "../_utils/prompts/selectDefaultBranch/selectDefaultBranch.js";
+import getModulesContent from "../_utils/modules/getModulesContent/getModulesContent.js";
+import saveFile from "../_utils/file/saveFile/saveFile.js";
 
 const init = (program: Command) => {
   program
@@ -16,31 +16,17 @@ const init = (program: Command) => {
     .description(definition.init.description)
     .action(async () => {
       const root = isRootOfRepository();
-      const answers: any = await prompts([
-        {
-          name: "squash",
-          type: "toggle",
-          message: "Squash history?",
-          initial: true,
-          active: "yes",
-          inactive: "no",
-        },
-        {
-          name: "defaultBranch",
-          type: "text",
-          message: "Default branch",
-          initial: "main",
-        },
-      ]);
+      const { modules, defaultBranch } = await fetchModules();
+      const { selectedModules } = await selectModules(modules);
+      const { selectedDefaultBranch }: any =
+        await selectDefaultBranch(defaultBranch);
 
-      const cfg: Config = {
-        modules: {},
-        defaultBranch: answers.defaultBranch,
-        squash: answers.squash,
+      const config: Config = {
+        modules: getModulesContent(modules, selectedModules),
+        defaultBranch: selectedDefaultBranch,
       };
 
-      const file = path.join(root, defaultConfigFile);
-      fs.writeFileSync(file, JSON.stringify(cfg, null, 2) + os.EOL);
+      saveFile(root, config);
       logSuccess(success.CREATED_CONFIG_FILE);
     });
 };
