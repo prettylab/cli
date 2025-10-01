@@ -1,1 +1,1 @@
-# pretty-design
+# core
