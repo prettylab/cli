@@ -15,7 +15,7 @@ const runSubtree = async (
     process.exit(1);
   }
 
-  const remoteAlias = `prettylab/${name}`;
+  const remoteAlias = `prettylab-${name}`;
   await isRemoteExists(root, remoteAlias, mod.remote);
 
   const branch = mod.branch || cfg.defaultBranch || "main";
