@@ -5,21 +5,15 @@ It helps you initialize configuration, add and sync modules, and keep everything
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install -g @prettylab/cli
 ```
 
-Or use directly via `npx`:
-
-```bash
-npx pretty <command>
-```
-
 ---
 
-## 🚀 Usage
+## Usage
 
 The CLI exposes several subcommands to manage your project:
 
@@ -115,7 +109,7 @@ pretty sync
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 The CLI relies on a configuration file (default: `.pretty.json`) stored in the root of your repository.  
 This file defines which modules are installed and how they are linked.
@@ -130,49 +124,6 @@ to generate one interactively.
 
 ---
 
-## 📝 Example Workflow
-
-```bash
-# Initialize repo
-pretty init
-
-# Add a module
-pretty add ui-kit
-
-# Pull latest updates
-pretty pull ui-kit
-
-# Push local changes
-pretty push ui-kit
-
-# Sync all modules
-pretty sync
-
-# Check current status
-pretty status
-```
-
----
-
-## 🛠 Development
-
-Clone the repo and build:
-
-```bash
-git clone https://github.com/pretty/pretty-cli.git
-cd pretty-cli
-pnpm install
-pnpm build
-```
-
-Now you can run:
-
-```bash
-pretty <command>
-```
-
----
-
-## 📖 License
+## License
 
 MIT © PrettyLab
