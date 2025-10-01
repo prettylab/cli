@@ -4,11 +4,6 @@
       "remote": "git@github.com:prettylab/core.git",
       "branch": "main",
       "prefix": "src/prettylab/core"
-    },
-    "editor-tiptap": {
-      "remote": "git@github.com:prettylab/editor-tiptap.git",
-      "branch": "main",
-      "prefix": "src/prettylab/editor"
     }
   },
   "defaultBranch": "main"

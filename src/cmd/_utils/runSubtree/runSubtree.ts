@@ -14,7 +14,8 @@ const runSubtree = async (
     console.error(kleur.red(`Unknown module '${name}'. Use 'pretty list'.`));
     process.exit(1);
   }
-  const remoteAlias = `pretty-${name}`;
+
+  const remoteAlias = `prettylab/${name}`;
   await isRemoteExists(root, remoteAlias, mod.remote);
 
   const branch = mod.branch || cfg.defaultBranch || "main";
