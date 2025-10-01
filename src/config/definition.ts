@@ -1,11 +1,11 @@
 import pretty from "../cmd/pretty.js";
-import add from "../cmd/add/add.js";
+import install from "../cmd/install/install.js";
 import { defaultConfigFile } from "./configFiles.js";
 import init from "../cmd/init/init.js";
 import list from "../cmd/list/list.js";
 import pull from "../cmd/pull/pull.js";
 import push from "../cmd/push/push.js";
-import set from "../cmd/set/set.js";
+import add from "../cmd/add/add.js";
 import status from "../cmd/status/status.js";
 import sync from "../cmd/sync/sync.js";
 
@@ -16,10 +16,10 @@ const definition = {
       "Command-line tool to install and update prettylab dependencies",
     caller: (program) => pretty(program),
   },
-  add: {
-    command: "add <module>",
-    description: "Add a module into this repo",
-    caller: (program) => add(program),
+  install: {
+    command: "install <module>",
+    description: "Install a module into this repo",
+    caller: (program) => install(program),
   },
   init: {
     command: "init",
@@ -41,11 +41,11 @@ const definition = {
     description: "Push local changes back to the module upstream",
     caller: (program) => push(program),
   },
-  set: {
-    command: "set <module>",
+  add: {
+    command: "Add <module>",
     description: `Add or update a module in ${defaultConfigFile}`,
     // TODO: ADD HERE OPTIONS
-    caller: (program) => set(program),
+    caller: (program) => add(program),
   },
   status: {
     command: "status",

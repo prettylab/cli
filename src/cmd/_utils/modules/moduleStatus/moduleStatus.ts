@@ -1,9 +1,9 @@
-import { Config } from "../project/_actions/getConfig/types.js";
-import isRemoteExists from "../git/isRemoteExists/isRemoteExists.js";
-import fetchRemote from "../git/_actions/fetchRemote/fetchRemote.js";
-import isModuleDirty from "../git/isModuleDirty/isModuleDirty.js";
-import splitPrefix from "../splitPrefix/splitPrefix.js";
-import isAheadOrBehind from "../git/isAheadOrBehind/isAheadOrBehind.js";
+import { Config } from "../../project/_actions/getConfig/types.js";
+import isRemoteExists from "../../git/isRemoteExists/isRemoteExists.js";
+import fetchRemote from "../../git/_actions/fetchRemote/fetchRemote.js";
+import isModuleDirty from "../../git/isModuleDirty/isModuleDirty.js";
+import splitPrefix from "../../git/splitPrefix/splitPrefix.js";
+import isAheadOrBehind from "../../git/isAheadOrBehind/isAheadOrBehind.js";
 import { ModuleStatus } from "./types.js";
 
 const moduleStatus = async (

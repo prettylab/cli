@@ -29,13 +29,13 @@ Main entrypoint for the tool. Shows help and available commands.
 
 ---
 
-### `pretty add <module>`
+### `pretty install <module>`
 
 ```bash
-pretty add <module>
+pretty install <module>
 ```
 
-**Description:** Add a module into the current repo.
+**Description:** Install a module into the current repo.
 
 ---
 
@@ -79,10 +79,10 @@ pretty push <module>
 
 ---
 
-### `pretty set <module>`
+### `pretty add <module>`
 
 ```bash
-pretty set <module>
+pretty add <module>
 ```
 
 **Description:** Add or update a module in `.pretty.json`.

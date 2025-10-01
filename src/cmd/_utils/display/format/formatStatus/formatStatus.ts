@@ -1,5 +1,5 @@
 import kleur from "kleur";
-import moduleStatus from "../../../moduleStatus/moduleStatus.js";
+import moduleStatus from "../../../modules/moduleStatus/moduleStatus.js";
 
 const formatStatus = (s: Awaited<ReturnType<typeof moduleStatus>>): string => {
   const name = kleur.bold(s.name);

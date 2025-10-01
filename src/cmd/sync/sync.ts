@@ -4,8 +4,8 @@ import isRootOfRepository from "../_utils/project/isRootOfRepository/isRootOfRep
 import getConfig from "../_utils/project/_actions/getConfig/getConfig.js";
 import warning from "../_utils/display/logs/messages/warning.js";
 import logWarning from "../_utils/display/logs/caller/logWarning.js";
-import runSubtree from "../_utils/runSubtree/runSubtree.js";
-import moduleStatus from "../_utils/moduleStatus/moduleStatus.js";
+import runSubtree from "../_utils/git/runSubtree/runSubtree.js";
+import moduleStatus from "../_utils/modules/moduleStatus/moduleStatus.js";
 import definition from "../../config/definition.js";
 import log from "../_utils/display/logs/caller/log.js";
 import logError from "../_utils/display/logs/caller/logError.js";

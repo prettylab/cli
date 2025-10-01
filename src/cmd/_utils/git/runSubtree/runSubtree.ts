@@ -1,7 +1,7 @@
 import kleur from "kleur";
 import { execa } from "execa";
-import { Config } from "../project/_actions/getConfig/types.js";
-import isRemoteExists from "../git/isRemoteExists/isRemoteExists.js";
+import { Config } from "../../project/_actions/getConfig/types.js";
+import isRemoteExists from "../isRemoteExists/isRemoteExists.js";
 
 const runSubtree = async (
   root: string,

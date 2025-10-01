@@ -4,7 +4,7 @@ import isWorktreeClean from "../_utils/git/isWorktreeClean/isWorktreeClean.js";
 import isRootOfRepository from "../_utils/project/isRootOfRepository/isRootOfRepository.js";
 import getConfig from "../_utils/project/_actions/getConfig/getConfig.js";
 import logWarning from "../_utils/display/logs/caller/logWarning.js";
-import moduleStatus from "../_utils/moduleStatus/moduleStatus.js";
+import moduleStatus from "../_utils/modules/moduleStatus/moduleStatus.js";
 import formatStatus from "../_utils/display/format/formatStatus/formatStatus.js";
 import definition from "../../config/definition.js";
 import log from "../_utils/display/logs/caller/log.js";

@@ -9,7 +9,7 @@ import selectModules from "../_utils/prompts/selectModules/selectModules.js";
 import selectDefaultBranch from "../_utils/prompts/selectDefaultBranch/selectDefaultBranch.js";
 import getModulesContent from "../_utils/modules/getModulesContent/getModulesContent.js";
 import saveFile from "../_utils/file/saveFile/saveFile.js";
-import runSubtree from "../_utils/runSubtree/runSubtree.js";
+import runSubtree from "../_utils/git/runSubtree/runSubtree.js";
 
 const init = (program: Command) => {
   program
