@@ -1,6 +1,11 @@
-export type ModuleCfg = { remote: string; branch: string; prefix: string };
+export type ModuleCfg = {
+  remote: string;
+  branch: string;
+  prefix: string;
+  lockedAt?: string;
+};
+
 export type Config = {
   modules: Record<string, ModuleCfg>;
   defaultBranch?: string;
-  squash?: boolean;
 };

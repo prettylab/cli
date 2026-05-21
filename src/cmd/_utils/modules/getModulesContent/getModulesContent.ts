@@ -1,9 +1,22 @@
 import { ModuleCfg } from "../../project/_actions/getConfig/types.js";
 
-const getModulesContent = (modules: any, selectedModules: any) => {
+const getModulesContent = (
+  modules: any,
+  selectedModules: string[],
+): Record<string, ModuleCfg> => {
   return Object.fromEntries(
-    Object.entries(modules).filter(([key]) => selectedModules.includes(key)),
-  ) as Record<string, ModuleCfg>;
+    selectedModules.map((name) => {
+      const mod = modules[name] ?? {};
+      return [
+        name,
+        {
+          remote: mod.remote,
+          branch: mod.branch,
+          prefix: `prettylab/${name}`,
+        },
+      ];
+    }),
+  );
 };
 
 export default getModulesContent;

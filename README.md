@@ -1,7 +1,8 @@
 # Pretty CLI
 
-**Pretty CLI** is a command-line tool to install, configure, and manage [prettylab](https://github.com/prettylab) dependencies inside your repositories.  
-It helps you initialize configuration, add and sync modules, and keep everything up to date.
+**Pretty CLI** is a command-line tool to install [prettylab](https://github.com/prettylab) modules into your repository.
+
+It fetches the module catalog from [`pretty.onhq.pl/modules.json`](https://pretty.onhq.pl/modules.json), lets you pick which ones you want, writes a `pretty.json` manifest, and pulls each selected module into a `prettylab/` folder via `git subtree`.
 
 ---
 
@@ -15,27 +16,13 @@ npm install -g @prettylab/cli
 
 ## Usage
 
-The CLI exposes several subcommands to manage your project:
-
 ### `pretty`
 
 ```bash
 pretty
 ```
 
-Main entrypoint for the tool. Shows help and available commands.
-
-**Description:** Command-line tool to install and update PrettyLab dependencies.
-
----
-
-### `pretty install <module>`
-
-```bash
-pretty install <module>
-```
-
-**Description:** Install a module into the current repo.
+Shows usage and the list of available commands.
 
 ---
 
@@ -45,82 +32,84 @@ pretty install <module>
 pretty init
 ```
 
-**Description:** Create a `pretty.json` interactively in this repo.
+Fetches the module catalog from `pretty.onhq.pl/modules.json`, opens an interactive menu so you can pick which modules to install, creates a `pretty.json` file in the repository root, and pulls each selected module into the `prettylab/` folder.
+
+Run this once per project to bootstrap.
 
 ---
 
-### `pretty list`
+### `pretty install`
 
 ```bash
-pretty list
+pretty install
 ```
 
-**Description:** List configured modules.
+Fetches the module catalog, shows a menu of modules that are not yet installed, adds the selected ones to `pretty.json`, and pulls them into the `prettylab/` folder.
+
+Use this to add more modules to an existing project.
 
 ---
 
 ### `pretty pull <module>`
 
 ```bash
-pretty pull <module>
+pretty pull core
 ```
 
-**Description:** Pull latest changes for a module into this repo.
+Stashes any uncommitted changes in the repo, runs `git subtree pull` for the module (honoring a `lockedAt` commit if set), restores the stash, and prints how many commits were brought in.
 
 ---
 
 ### `pretty push <module>`
 
 ```bash
-pretty push <module>
+pretty push core
 ```
 
-**Description:** Push local changes back to the module upstream.
+Stages everything under the module's folder, prompts for a commit message, creates the commit, and pushes it back upstream with `git subtree push`. Refuses to run if the module is locked.
 
 ---
 
-### `pretty add <module>`
+### `pretty lock <module> [commit]`
 
 ```bash
-pretty add <module>
+pretty lock core
+pretty lock core 1a2b3c4
 ```
 
-**Description:** Add or update a module in `.pretty.json`.
+Pins the module to a specific remote commit. If no commit is provided, it resolves the current tip of the module's branch and locks to that SHA. Future `pretty pull` runs stop at the locked commit.
 
 ---
 
-### `pretty status`
+### `pretty unlock <module>`
 
 ```bash
-pretty status
+pretty unlock core
 ```
 
-**Description:** Show dirty/ahead/behind state for all modules (or a specific one with `--module`).
-
----
-
-### `pretty sync`
-
-```bash
-pretty sync
-```
-
-**Description:** Pull all modules; optionally push those with local commits ahead of upstream.
+Removes the lock so the module follows its configured branch again.
 
 ---
 
 ## Configuration
 
-The CLI relies on a configuration file (default: `.pretty.json`) stored in the root of your repository.  
-This file defines which modules are installed and how they are linked.
+`pretty.json` lives in the root of your repository and tracks the installed modules:
 
-Run:
-
-```bash
-pretty init
+```json
+{
+  "modules": {
+    "example": {
+      "remote": "https://github.com/prettylab/example.git",
+      "branch": "main",
+      "prefix": "prettylab/example",
+      "lockedAt": "1a2b3c4d5e6f..."
+    }
+  },
+  "defaultBranch": "main"
+}
 ```
 
-to generate one interactively.
+Modules are pulled with `git subtree`, so the source ends up committed under `prettylab/<module>` in your repo.
 
 ---
 

@@ -8,45 +8,25 @@ const runSubtree = async (
   action: "add" | "pull" | "push",
   name: string,
   config: Config,
+  refOverride?: string,
 ) => {
   const mod = config.modules[name];
   if (!mod) {
-    console.error(kleur.red(`Unknown module '${name}'. Use 'pretty list'.`));
+    console.error(kleur.red(`Unknown module '${name}'.`));
     process.exit(1);
   }
 
   const remoteAlias = `prettylab-${name}`;
   await isRemoteExists(root, remoteAlias, mod.remote);
 
-  const branch = mod.branch || config.defaultBranch || "main";
+  const ref =
+    refOverride ?? mod.lockedAt ?? mod.branch ?? config.defaultBranch ?? "main";
   const prefix = mod.prefix;
 
-  if (action === "add") {
-    const args = [
-      "subtree",
-      "add",
-      "--prefix",
-      prefix,
-      remoteAlias,
-      branch,
-      "--squash",
-    ];
-    await execa("git", args, { stdio: "inherit", cwd: root });
-  } else if (action === "pull") {
-    const args = [
-      "subtree",
-      "pull",
-      "--prefix",
-      prefix,
-      remoteAlias,
-      branch,
-      "--squash",
-    ];
-    await execa("git", args, { stdio: "inherit", cwd: root });
-  } else if (action === "push") {
-    const args = ["subtree", "push", "--prefix", prefix, remoteAlias, branch];
-    await execa("git", args, { stdio: "inherit", cwd: root });
-  }
+  const baseArgs = ["subtree", action, "--prefix", prefix, remoteAlias, ref];
+  const args = action === "push" ? baseArgs : [...baseArgs, "--squash"];
+
+  await execa("git", args, { stdio: "inherit", cwd: root });
 };
 
 export default runSubtree;

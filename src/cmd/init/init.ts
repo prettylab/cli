@@ -6,7 +6,6 @@ import logSuccess from "../_utils/display/logs/caller/logSuccess.js";
 import definition from "../../config/definition.js";
 import fetchModules from "../_utils/modules/fetchModules/fetchModules.js";
 import selectModules from "../_utils/prompts/selectModules/selectModules.js";
-import selectDefaultBranch from "../_utils/prompts/selectDefaultBranch/selectDefaultBranch.js";
 import getModulesContent from "../_utils/modules/getModulesContent/getModulesContent.js";
 import saveFile from "../_utils/file/saveFile/saveFile.js";
 import runSubtree from "../_utils/git/runSubtree/runSubtree.js";
@@ -19,12 +18,12 @@ const init = (program: Command) => {
       const root = isRootOfRepository();
       const { modules, defaultBranch } = await fetchModules();
       const { selectedModules } = await selectModules(modules);
-      const { selectedDefaultBranch }: any =
-        await selectDefaultBranch(defaultBranch);
+
+      if (!selectedModules || selectedModules.length === 0) return;
 
       const config: Config = {
         modules: getModulesContent(modules, selectedModules),
-        defaultBranch: selectedDefaultBranch,
+        defaultBranch,
       };
 
       saveFile(root, config);

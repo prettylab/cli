@@ -5,3 +5,5 @@ node_modules
 # TEMPORARY
 .pretty.json
 prettylab
+
+.claude

@@ -2,12 +2,10 @@ import pretty from "../cmd/pretty.js";
 import install from "../cmd/install/install.js";
 import { defaultConfigFile } from "./configFiles.js";
 import init from "../cmd/init/init.js";
-import list from "../cmd/list/list.js";
 import pull from "../cmd/pull/pull.js";
 import push from "../cmd/push/push.js";
-import add from "../cmd/add/add.js";
-import status from "../cmd/status/status.js";
-import sync from "../cmd/sync/sync.js";
+import lock from "../cmd/lock/lock.js";
+import unlock from "../cmd/unlock/unlock.js";
 
 const definition = {
   pretty: {
@@ -16,50 +14,38 @@ const definition = {
       "Command-line tool to install and update prettylab dependencies",
     caller: (program) => pretty(program),
   },
-  install: {
-    command: "install <module>",
-    description: "Install a module into this repo",
-    caller: (program) => install(program),
-  },
   init: {
     command: "init",
-    description: `Create a ${defaultConfigFile} interactively in this repo`,
+    description: `Create a ${defaultConfigFile} interactively and pull selected modules`,
     caller: (program) => init(program),
   },
-  list: {
-    command: "list",
-    description: "List configured modules",
-    caller: (program) => list(program),
+  install: {
+    command: "install",
+    description: `Select additional modules to add to ${defaultConfigFile} and pull them`,
+    caller: (program) => install(program),
   },
   pull: {
     command: "pull <module>",
-    description: "Pull latest changes for a module into this repo",
+    description:
+      "Stash local changes, pull the module from its remote, restore the stash, and show a summary",
     caller: (program) => pull(program),
   },
   push: {
     command: "push <module>",
-    description: "Push local changes back to the module upstream",
+    description:
+      "Commit local changes under the module's folder with a custom message and push them upstream",
     caller: (program) => push(program),
   },
-  add: {
-    command: "Add <module>",
-    description: `Add or update a module in ${defaultConfigFile}`,
-    // TODO: ADD HERE OPTIONS
-    caller: (program) => add(program),
-  },
-  status: {
-    command: "status",
+  lock: {
+    command: "lock <module> [commit]",
     description:
-      "Show dirty/ahead/behind for all modules (or a specific one with --module)",
-    // TODO: ADD HERE OPTIONS
-    caller: (program) => status(program),
+      "Lock a module to a specific remote commit (defaults to the current tip of its branch)",
+    caller: (program) => lock(program),
   },
-  sync: {
-    command: "sync",
-    description:
-      "Pull all modules; optionally push those with local commits ahead of upstream",
-    // TODO: ADD HERE OPTIONS
-    caller: (program) => sync(program),
+  unlock: {
+    command: "unlock <module>",
+    description: "Remove the lock so the module follows its branch again",
+    caller: (program) => unlock(program),
   },
 };
 
