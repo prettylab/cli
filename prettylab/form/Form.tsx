@@ -7,7 +7,7 @@ import Flex from "@prettylab/core/components/layout/Flex/Flex";
 interface Props {
   form: any;
   onSubmit: (data: any) => void;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function Form({ form, onSubmit, children }: Props) {
