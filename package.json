@@ -1,13 +1,19 @@
 {
   "name": "@prettylab/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Command-line tool to install and update prettylab dependencies",
   "type": "module",
   "bin": {
     "pretty": "dist/cli.js"
   },
-  "engines": { "node": ">=18" },
-  "files": ["dist", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup src/cli.ts --format esm,cjs --dts --target node18 --out-dir dist",
     "dev": "tsx src/cli.ts",
