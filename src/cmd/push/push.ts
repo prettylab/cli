@@ -2,6 +2,8 @@ import { Command } from "commander";
 import kleur from "kleur";
 import prompts from "prompts";
 import { execa } from "execa";
+import fs from "fs";
+import path from "path";
 import isRootOfRepository from "../_utils/project/isRootOfRepository/isRootOfRepository.js";
 import {
   getConfig,
@@ -9,6 +11,15 @@ import {
 } from "../_utils/project/_actions/getConfig/getConfig.js";
 import runSubtree from "../_utils/git/runSubtree/runSubtree.js";
 import definition from "../../config/definition.js";
+
+const isIgnored = async (root: string, prefix: string) => {
+  try {
+    await execa("git", ["check-ignore", "-q", prefix], { cwd: root });
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const prefixHasChanges = async (root: string, prefix: string) => {
   const { stdout } = await execa(
@@ -32,6 +43,24 @@ const push = (program: Command) => {
         console.log(
           kleur.red(
             `✗ '${name}' is locked at ${mod.lockedAt.slice(0, 7)}. Unlock it before pushing.`,
+          ),
+        );
+        process.exit(1);
+      }
+
+      if (!fs.existsSync(path.join(root, mod.prefix))) {
+        console.log(
+          kleur.red(
+            `✗ '${mod.prefix}' does not exist. Run 'pretty pull ${name}' or reinstall the module.`,
+          ),
+        );
+        process.exit(1);
+      }
+
+      if (await isIgnored(root, mod.prefix)) {
+        console.log(
+          kleur.red(
+            `✗ '${mod.prefix}' is excluded by .gitignore — git subtree needs this folder to be tracked. Remove it from .gitignore and try again.`,
           ),
         );
         process.exit(1);

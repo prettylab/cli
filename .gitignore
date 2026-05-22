@@ -2,8 +2,4 @@ dist
 node_modules
 .idea
 
-# TEMPORARY
-.pretty.json
-prettylab
-
 .claude
